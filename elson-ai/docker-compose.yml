@@ -1,0 +1,24 @@
+# Local development stack. Postgres, MinIO and the Celery worker are added in the sprints that need them.
+services:
+  api:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      ELSON_MAX_UPLOAD_MB: ${ELSON_MAX_UPLOAD_MB:-50}
+    volumes:
+      - audio-data:/var/lib/elson  # generated audio survives container restarts
+
+  # Job queue: durable, never evicted (used from Sprint 2)
+  redis-broker:
+    image: redis:7
+    command: ["redis-server", "--appendonly", "yes"]
+    ports: ["6379:6379"]
+
+  # Hot cache: bounded and evictable (used from Sprint 2)
+  redis-cache:
+    image: redis:7
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru", "--save", ""]
+    ports: ["6380:6379"]
+
+volumes:
+  audio-data:

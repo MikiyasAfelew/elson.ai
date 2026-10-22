@@ -1,0 +1,27 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Secrets and local config
+.env
+*.pem
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+
+# Flutter (mobile/ is added in Sprint 3)
+mobile/.dart_tool/
+mobile/build/
+mobile/.flutter-plugins*
+
+# Generated audio and local data
+data/
+*.opus
+*.m4a
